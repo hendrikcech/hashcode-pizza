@@ -2,8 +2,8 @@ package model;
 
 // immutable
 public class Coordinate {
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
 
     public Coordinate(int row, int column) {
 	this.row = row;
@@ -43,22 +43,25 @@ public class Coordinate {
     }
 
     public static int putRowInBounds(int row, Problem p) {
+	int r = row;
 	if (row > p.pizza.getRowCount() - 1) {
-	    row = p.pizza.getRowCount() - 1;
+	    r = p.pizza.getRowCount() - 1;
 	}
 	if (row < 0) {
-	    row = 0;
+	    r = 0;
 	}
-	return row;
+
+	return r;
     }
 
     public static int putColumnInBounds(int column, Problem p) {
+	int c = column;
 	if (column > p.pizza.getColumnCount() - 1) {
-	    column = p.pizza.getColumnCount() - 1;
+	    c = p.pizza.getColumnCount() - 1;
 	}
 	if (column < 0) {
-	    column = 0;
+	    c = 0;
 	}
-	return column;
+	return c;
     }
 }
