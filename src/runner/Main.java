@@ -11,16 +11,16 @@ import parser.ParserException;
 
 public class Main {
 
-    public static void main(String[] args) throws ParserException {
+	public static void main(String[] args) throws ParserException {
 
-	List<Problem> problems = new ArrayList<>(4);
-	problems.add(new Parser(Paths.get("input/example.in")).parse());
-	problems.add(new Parser(Paths.get("input/big.in")).parse());
+		List<Problem> problems = new ArrayList<>(4);
+		problems.add(new Parser(Paths.get("input/example.in")).parse());
+		problems.add(new Parser(Paths.get("input/big.in")).parse());
 
-	for (Problem p : problems) {
-	    p.printPossibleShapes();
-	    System.out.println(new Greedy(p).compute());
+		for (Problem p : problems) {
+			p.printPossibleShapes();
+			System.out.println(new Greedy(p).compute());
+		}
 	}
-    }
 
 }
