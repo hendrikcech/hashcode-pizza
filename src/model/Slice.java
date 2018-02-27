@@ -20,7 +20,12 @@ public final class Slice implements Cloneable {
 
 	@Override
 	public String toString() {
-		return String.format("Slice %dx%d", numRows, numColumns);
+		if (position == null) {
+			return String.format("Slice %dx%d", numRows, numColumns);
+		} else {
+			return String.format("Slice at (%d,%d) %dx%d", position.getRow(), position.getColumn(), numRows,
+					numColumns);
+		}
 	}
 
 	@Override

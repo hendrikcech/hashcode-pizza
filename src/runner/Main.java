@@ -6,6 +6,7 @@ import java.util.List;
 
 import algo.Greedy;
 import model.Problem;
+import parser.OutputWriter;
 import parser.Parser;
 import parser.ParserException;
 
@@ -15,11 +16,14 @@ public class Main {
 
 		List<Problem> problems = new ArrayList<>(4);
 		problems.add(new Parser(Paths.get("input/example.in")).parse());
+		problems.add(new Parser(Paths.get("input/small.in")).parse());
+		problems.add(new Parser(Paths.get("input/medium.in")).parse());
 		problems.add(new Parser(Paths.get("input/big.in")).parse());
 
 		for (Problem p : problems) {
-			p.printPossibleShapes();
-			System.out.println(new Greedy(p).compute());
+			OutputWriter writer = new OutputWriter(new Greedy(p).compute());
+			System.out.println("--");
+			writer.write("output/" + p.name);
 		}
 	}
 
