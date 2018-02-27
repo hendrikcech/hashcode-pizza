@@ -1,6 +1,7 @@
 package algo;
 
 import java.util.List;
+import java.util.Random;
 
 import model.Coordinate;
 import model.Pizza;
@@ -11,6 +12,7 @@ public class Greedy {
 
 	private final Pizza pizza;
 	private final Problem problem;
+	private Random random = new Random();
 
 	public Greedy(Problem p) {
 		this.problem = p;
@@ -18,40 +20,21 @@ public class Greedy {
 	}
 
 	public Pizza compute() {
-		for (int row = 0; row < pizza.getRowCount(); row++) {
-			for (int col = 0; col < pizza.getColumnCount(); col++) {
-				System.out.println("looking at " + row + "/" + col);
+		for (int col = 0; col < pizza.getColumnCount(); col++) {
+			for (int row = 0; row < pizza.getRowCount(); row++) {
 				if (pizza.covered[row][col]) {
-					System.out.println("covered");
 					continue;
 				}
 				List<Slice> possible = problem.getPossibleSlices(new Coordinate(row, col), pizza.covered);
 				if (!possible.isEmpty()) {
-					System.out.println(possible.get(possible.size() - 1));
-					pizza.addToSolution(possible.get(possible.size() - 1));
-				} else {
-					System.out.println("isEmpty");
+					int index = possible.size() - 1;
+					if (random.nextFloat() < 0.04) {
+						index = random.nextInt(possible.size());
+					}
+					pizza.addToSolution(possible.get(index));
 				}
 			}
-		}
-		System.out.println("Solution");
-		for (Slice s : pizza.solutionSlices) {
-			System.out.println(s);
 		}
 		return pizza;
 	}
-
-	private int getScore() {
-		int score = 0;
-		for (boolean[] row : pizza.covered) {
-			for (boolean cell : row) {
-				if (cell) {
-					score += 1;
-				}
-			}
-
-		}
-		return score;
-	}
-
 }

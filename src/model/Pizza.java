@@ -48,4 +48,22 @@ public class Pizza {
 	public int getColumnCount() {
 		return pizza[0].length;
 	}
+
+	public int getScore() {
+		int score = 0;
+		for (boolean[] row : covered) {
+			for (boolean cell : row) {
+				if (cell) {
+					score += 1;
+				}
+			}
+
+		}
+		return score;
+	}
+
+	public void reset() {
+		solutionSlices = new ArrayList<>();
+		this.covered = new boolean[getRowCount()][getColumnCount()];
+	}
 }

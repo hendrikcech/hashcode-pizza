@@ -1,30 +1,29 @@
 package runner;
 
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import algo.Greedy;
-import model.Problem;
-import parser.OutputWriter;
 import parser.Parser;
 import parser.ParserException;
 
 public class Main {
 
 	public static void main(String[] args) throws ParserException {
+		AtomicInteger maxValueBig = new AtomicInteger();
+		AtomicInteger maxValueMedium = new AtomicInteger();
 
-		List<Problem> problems = new ArrayList<>(4);
-		problems.add(new Parser(Paths.get("input/example.in")).parse());
-		problems.add(new Parser(Paths.get("input/small.in")).parse());
-		problems.add(new Parser(Paths.get("input/medium.in")).parse());
-		problems.add(new Parser(Paths.get("input/big.in")).parse());
+		ExecutorService executor = Executors.newFixedThreadPool(8);
 
-		for (Problem p : problems) {
-			OutputWriter writer = new OutputWriter(new Greedy(p).compute());
-			System.out.println("--");
-			writer.write("output/" + p.name);
-		}
+		executor.submit(new Solver(new Parser(Paths.get("input/big.in")).parse(), maxValueBig));
+		executor.submit(new Solver(new Parser(Paths.get("input/big.in")).parse(), maxValueBig));
+		executor.submit(new Solver(new Parser(Paths.get("input/big.in")).parse(), maxValueBig));
+		executor.submit(new Solver(new Parser(Paths.get("input/big.in")).parse(), maxValueBig));
+		executor.submit(new Solver(new Parser(Paths.get("input/big.in")).parse(), maxValueBig));
+		executor.submit(new Solver(new Parser(Paths.get("input/medium.in")).parse(), maxValueMedium));
+		executor.submit(new Solver(new Parser(Paths.get("input/medium.in")).parse(), maxValueMedium));
+		executor.submit(new Solver(new Parser(Paths.get("input/medium.in")).parse(), maxValueMedium));
 	}
 
 }
